@@ -266,7 +266,7 @@ int main(void)
     return 0;
 }
 ```
-6. 编写一个程序，创建一个整形变量toes,并将toes设置为10,程序中还要计算toes的两倍和toes的平方。该程序打印3个值，并分别描述以区别。
+6. **编写一个程序，创建一个整形变量toes,并将toes设置为10,程序中还要计算toes的两倍和toes的平方。该程序打印3个值，并分别描述以区别。**
 ```c
 #include<stdio.h>
 int main(void)
@@ -276,7 +276,7 @@ int main(void)
     return 0;
 }
 ```
-7. 许多研究表明，微笑多多益善，编写一个程序，生成以下格式的输出。
+7. **许多研究表明，微笑多多益善，编写一个程序，生成以下格式的输出。**
 ```c
 Smile!Smile!Smile!
 Smile!Smile!
@@ -300,7 +300,7 @@ int main(void)
     return 0;
 }
 ```
-8. 在c语言中，一个函数可以调用另一个函数。编写一个程序，用于调用一个名为one_three()函数，该函数在一行打印“One”，再调用另一个函数two()，然后在另一行打印单词“three”。two()函数在一行显示单词“two”。main()函数在调用one_three()函数前要打印短语“Staring now：”，并在调用完毕后显示短语“Done！”。应此，该程序的输出如下所示。
+8. **在c语言中，一个函数可以调用另一个函数。编写一个程序，用于调用一个名为one_three()函数，该函数在一行打印“One”，再调用另一个函数two()，然后在另一行打印单词“three”。two()函数在一行显示单词“two”。main()函数在调用one_three()函数前要打印短语“Staring now：”，并在调用完毕后显示短语“Done！”。应此，该程序的输出如下所示。**
 ```c
 Staring now;
 one
@@ -327,4 +327,166 @@ int main(void)
     one_three();
     printf("Done!");
 }
+```
+<br>
+<br>
+
+##第<font color=grey size=10>3</font>章
+###复习题
+1. **指出下面各种数据使用的合适类型(有些可以使用多种类型)**
+```c
+East Simpleton的入口(short)
+DVD的价格(float)
+本章出现次数最多的字母(char)
+本章出现次数最多的字母的次数(int)
+```
+2. **在什么情况下要用long类型的变量代替int类型的变量**
+```
+long所能储存的数据范围更大，当我们储存的数据超过int的储存范围时，我们会用long代替int.
+```
+3. **使用哪些可移植的数据类型可以获得32位有符号整数？选择的理由是什么**
+c语言可移植数据类型
+```
+C语言中的可移植数据类型是指具有确定大小和范围的数据类型，其大小和范围在不同的平台上是一致的。这些数据类型被定义在C标准库的头文件 <stdint.h> 中，其中包含了以下可移植数据类型：
+
+    整数类型：
+        int8_t：有符号8位整数
+        uint8_t：无符号8位整数
+        int16_t：有符号16位整数
+        uint16_t：无符号16位整数
+        int32_t：有符号32位整数
+        uint32_t：无符号32位整数
+        int64_t：有符号64位整数
+        uint64_t：无符号64位整数
+
+    最小宽度的整数类型：
+        int_least8_t：至少8位的有符号整数
+        uint_least8_t：至少8位的无符号整数
+        int_least16_t：至少16位的有符号整数
+        uint_least16_t：至少16位的无符号整数
+        int_least32_t：至少32位的有符号整数
+        uint_least32_t：至少32位的无符号整数
+        int_least64_t：至少64位的有符号整数
+        uint_least64_t：至少64位的无符号整数
+        （"至少n位的有符号整数"指的是一个有符号整数类型，其大小至少为n位。这意味着它可以容纳至少n个二进制位。）
+
+    最快宽度的整数类型：
+        int_fast8_t：最快宽度的有符号整数
+        uint_fast8_t：最快宽度的无符号整数
+        int_fast16_t：最快宽度的有符号整数
+        uint_fast16_t：最快宽度的无符号整数
+        int_fast32_t：最快宽度的有符号整数
+        uint_fast32_t：最快宽度的无符号整数
+        int_fast64_t：最快宽度的有符号整数
+        uint_fast64_t：最快宽度的无符号整数
+（"最快宽度的有符号整数"指的是一个有符号整数类型，其大小是在当前平台上具有最高性能的整数类型。这意味着在当前平台上，这个整数类型的读写操作是最高效的。）
+    指针相关类型：
+        intptr_t：整数类型，足够容纳指针的值
+        uintptr_t：无符号整数类型，足够容纳指针的值
+
+这些可移植数据类型的定义保证了它们在不同平台上的大小和范围是一致的，使得编写可移植的C代码更加方便和可靠。
+```
+4. **指出下列常量的类型和含义**
+```
+'\b'   表示单个字符，\b表示退格字符
+1066   表示一个整形常量
+99.44  表示一个浮点数常量
+0XAA   表示一个十六进制(对于八进制和十六进制整形数据，系统优先解释为无符号类型)
+2.0e30 表示双精度浮点常量(编译器通常将浮点型常量解释为双精度类型)
+```
+5. **Dottie Cawm编写了一个程序，请找出其中的错误。**
+```c
+include<stdio.h>
+main(
+    float g;h;
+    float tax,rate;
+    g=e21;
+    tax = rate*g;
+)
+```
+修改如下
+```c
+#include<stdio.h>
+int main(void)
+{
+    float g,h;
+    float tax,rate;
+    g=1.0e21;
+    rate=0.08;
+    tax=rate*g;
+    h = g+tax;
+    return 0;
+}
+```
+6. **写出下列常量在声明中使用的数据类型和在printf()中对应的转换说明。**
+```
+12            int                    %d
+0X3           unsigned int(十六进制)  %#x
+‘C’           char                   %c
+2.34e07       double                 %e(%e 是一个转换说明符，用于格式化输出浮点数类型中的科学计数法表示)
+'\040'        char                   %c 
+7.0           double                 %lf
+6L            long                   %ld
+6.0f          float                  %f
+0x5.b6p12     float                  %a(%a 转换说明符用于将浮点数以十六进制格式输出，并且在输出中包含指数部分)
+```
+7. **写出下列常量在声明中使用的数据类型和在printf()中对应的转换说明(假设int为16位)**
+```
+012           unsigned int(八进制)    %#o
+2.9e05L       long double            %Le
+'s'           char                   %c
+100000        long                   %ld
+'\n'          char                   %c
+20.0f         float                  %f
+0x44          unsigned int           %#x
+-40           int                    %d
+```
+8. **假设程序的开头有以下声明。**
+```c
+int imate = 2;
+long shot = 53456;
+char grade = 'A';
+float log = 2.71828;
+```
+把下面的printf()语句中的转换字符补充完整。
+```
+printf("The odds against the %d were %ld to 1.\n",imate,shot);
+printf("A score of %f is not an %c grade.\n",log,grade);
+```
+9. **假设ch是char类型的变量，分别用转义序列，十进制，八进制和十六进制把回车字符赋给ch.**
+```
+char ch = '\r';
+char ch = 13;
+char ch = '\015';
+char ch = '\xd';
+```
+10. **修正下面的程序**
+```c
+void main(int) /this program is perfect/
+{
+    cows,legs,integer;
+    printf("How many cows legs did you count?\n");
+    scanf("%c",legs);
+    cows = legs/4;
+    printf("That implies there are %f cows,\n",cows);
+}
+```
+修改如下
+```c
+#include<stdio.h>
+intt main(void)
+{
+    int cows,legs;
+    printf("How many cows legs did you count?\n");
+    scanf("%d",&legs);
+    cows = legs/4;
+    printf("That implies there are %d cows,\n",cows);
+}
+```
+11. **指出下列转义序列的含义**
+```
+\n        表示换行
+\\        表示转义\
+\"        表示转义“
+\t        表示水平制表符
 ```
