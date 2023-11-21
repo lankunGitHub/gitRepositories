@@ -1,4 +1,4 @@
-#git学习笔记
+# git学习笔记
 <br>
 <br>
 <br>
@@ -81,3 +81,56 @@ $git config -e system
 ```
 打开系统级配置文件进行编辑
 其中版本库级别配置文件优先级最高，依次优先级下降，同时，高优先级的文件能覆盖低优先级文件的配置环境
+
+config配置文件是INI文件格式，git config命令可以读取或修改配置文件内容
+```
+$git config <section>.key   //读取
+```
+例如读取core小节bare属性值
+```
+$git config core.bare
+false
+```
+```
+$git config <section>.key <value>   //修改
+```
+例如修改core小节bare属性值
+```
+$git config core.bare ture
+```
+补充(什么是INI文件格式)：
+```
+INI 文件格式是一种简单的配置文件格式，通常用于存储应用程序的配置信息。INI 是 "Initialization"（初始化）的缩写，它的文件扩展名通常是 .ini。
+
+INI 文件格式由一系列的节（section）和键值对（key-value pairs）组成。每个节包含一组相关的键值对，用于描述特定的配置信息。每个键值对由键（key）和值（value）组成，它们之间使用等号（=）或冒号（:）进行分隔。
+
+下面是一个简单的 INI 文件的示例：
+
+; 这是注释
+[Section1]
+Key1=Value1
+Key2=Value2
+
+[Section2]
+Key3=Value3
+Key4=Value4
+
+在这个示例中，有两个节：Section1 和 Section2。每个节下面都有一组键值对。例如，在 Section1 中，有两个键值对：Key1=Value1 和 Key2=Value2。
+
+INI 文件格式通常具有以下特点：
+
+    节：节用于将相关的键值对进行分组。它们可以用来组织配置信息，使其更易于理解和维护。
+
+    键值对：键值对用于存储具体的配置信息。键表示配置项的名称，值表示配置项的值。它们之间使用等号或冒号进行分隔。
+
+    注释：注释用于提供对配置信息的说明。在 INI 文件中，注释通常以分号（;）开头，可以出现在文件的任何位置。
+
+    大小写不敏感：在大多数情况下，INI 文件格式是大小写不敏感的，这意味着键和节的名称不受大小写的影响。
+
+INI 文件格式非常简单且易于理解，因此在许多应用程序中被广泛使用。它通常用于存储应用程序的配置选项，例如数据库连接信息、用户首选项等。许多编程语言和框架都提供了用于解析和处理 INI 文件的库和工具。
+```
+补充(git config还可以操作任何其他INI文件)：
+```
+$GIT_CONFIG=test.ini git config a.b "fix"
+&GIT_CONFIG=test.ini git config a.b
+```
