@@ -490,3 +490,144 @@ intt main(void)
 \"        表示转义“
 \t        表示水平制表符
 ```
+<br>
+
+###编程题
+1. 通过试验(即编写带有此类问题的程序)观察系统如何处理整数上溢，浮点数上溢和浮点数下溢的情况。
+```c
+#include<stdio.h>
+int main(void)
+{
+    int a=2147483647;
+    float b=3.4e38;
+    float c=0.111111111;
+    printf("a=%d\n",a+1);
+    printf("b=%f\n",b+1);
+    printf("c=%f\n",c);
+    return 0;
+}
+```
+```
+a=-2147483648
+b=339999995214436424907732413799364296704.000000
+c=0.111111
+```
+2. 编写一个程序，要求提示输入一个ASCII码值，然后打印输出的字符。
+```c
+#include<stdio.h>
+int main(void)
+{
+    int a;
+    printf("请输入字符的ASCII码：");
+    scanf("%d",&a);
+    printf("%c\n",a);
+    return 0;
+}
+```
+3. 编写一个程序，发出一声警报，然后打印下列文本。
+```
+Starled by the sudden sound, Sally shouted,
+"By the Great Pumpkin, what was that!"
+```
+程序如下：
+```c
+#include<stdio.h>
+int main(void)
+{
+    char a='\a';
+    printf("%c",a);
+    printf("Starled by the sudden sound, Sally shouted,\n\"By the Great Pumpkin, what was that!\"");
+}
+```
+4. 编写一个程序，读取一个浮点数，先打印小数形式，后打印指数形式。然后，如果系统支持，再打印p计数法(即十六进制计数法)。按以下格式输出。
+```c
+#include<stdio.h>
+int main(void)
+{
+    float a;
+    printf("请输入一个浮点数：");
+    scanf("%f",&a);
+    printf("%f\n",a);
+    printf("%e\n",a);
+    printf("%a\n",a);
+    return 0;
+}
+```
+```
+1.250000
+1.250000e+00
+0x1.4p+0
+```
+5. 一年大约有3.156 x 10^7秒。编写一个程序，提示用户输入年龄，然后显示该年龄对应的秒数。
+```c
+#include<stdio.h>
+define year_second 3.156e7
+int main(void)
+{
+    double second,year;
+    printf("请输入您的年龄：");
+    scanf("%lf",&year);
+    second=year*year_second;
+    printf("您的年龄对应的秒数为%e\n",second);
+    return 0;
+}
+```
+6. 一个水分子的质量约为3.0 x 10^-32克。1夸脱(1夸脱=0.000946立方米)水的质量大约是950克。编写一个程序，提示用户输入水的夸脱数，并显示水分子的数量。
+```c
+#include<stdio.h>
+#define WATER 3.0e-32
+#deefine QURRT 950
+in main(void)
+{
+    double nums,quartnums;
+    printf("请输入夸脱的数量：");
+    scanf("%lf",&quartnums);
+    nums=quartnums*QUART/WATER;
+    printf("水分子数为：%e",nums);
+    return 0;
+}
+```
+7. 1英寸相当于2.54厘米。编写一个程序，提示用户输入身高(单位是英寸)，然后以厘米为单位显示身高。
+```c
+#include<stdio.h>
+#define INCH_CM 2.54
+in main(void)
+{
+    float height,inch;
+    printf("请输入您的身高：");
+    scanf("%f",&inch);
+    height=inch*INCH_CM;
+    printf("您的身高为：%.2f",height);
+    return 0;
+}
+```
+8. 在美国的测量体系中，1品脱(1品脱=0.4731765立方分米)等于2杯，1杯等于8盎司(1盎司=29.57353立方厘米)，1盎司大约等于2大汤勺，1大汤勺等于3茶勺。缩写一个程序，提示用户输入杯数，并且以品脱，盎司，汤勺，茶勺为单位显示等价容量。思考对于该程序，为何使用浮点型数据比整形数据更合适？
+```
+在单位转化过程中，可能会出现浮点型数据，并且实际使用中，也可能有浮点型数据的输入
+```
+```c
+#include<stdio.h>
+#define PINT_CUP 2
+#define CUP_OUNCE 8
+#define OUNCE_SPOON 2
+#define SPOON_TEA 3
+int main(void)
+{
+    float numcup,pint,cup,ounce,spoon,tea;
+    printf("请输入杯数：");
+    scanf("%f",&numcup);
+    pint=cup/PINT_CUP;
+    ounce=cup*CUP_OUNCE;
+    spoon=ounce*OUNCE_SPOON;
+    tea=spoon*SPOON_TEA;
+    printf("%f\n%f\n%f\n%f\n",pint,ounce,spoon,tea);
+    return 0;
+}
+```
+<br>
+
+##第<font color=grey size=10>4</font>章
+###复习题
+
+1. 再次运行程序1清单4.1,但是在要求输入人名时，请输入名和姓(根据英文书写习惯，姓和名中间有一个空格)，看看程序会发生什么情况。为什么?
+
