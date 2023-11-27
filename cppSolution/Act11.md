@@ -174,5 +174,128 @@ void excahnge(char *a)
 ```
 10. **编写一个函数接受一个字符串作为参数，并删除字符串中的空格。在一个程序中测试该函数，使用循环读取输入行，直到用户输入一行空行。该程序应该应用该函数只每个输入的字符串，并显示处理后的字符串。**
 ```c
-
+char *deleteBlock(char *a)
+{
+     char *s=a;
+     while(*a!='\0')
+     {
+        if(*a!=' ')  *s++=*a++;
+        else    a++;
+     }
+     *s++='\0';
+     return a;
+}
+```
+11. **编写一个函数，读入10个字符串或者读到EOF时停止。该程序为用户提供一个有5个选项的菜单：打印源字符串列表、以ASCII中的顺序打印字符串、按长度递增顺序打印字符串、按字符串中第1个单词的长度打印字符串、退出。菜单可以循环显示，除非用户选择退出选项。当然，该程序要能真正完成菜单中各选项的功能。**
+```c
+#include<stdio.h>
+#define SIZE 20
+void tenString(char a[10][SIZE])
+{
+    int i=0;
+    do
+    {
+        fgets(a[i],SIZE,stdin);
+        i++;
+    } while (a[i]!=EOF&&i<10);
+}
+void ascPrint(char a[10][SIZE])
+{
+    char temp[SIZE];
+    for(int i=0;i<9;i++)
+    {
+        for(int k=0;k<9-i;k++)
+        {
+            if(*a[k]>*a[k+1])
+            {
+                strcpy(temp,a[k]);
+                strcpy(a[k],a[k+1]);
+                strcpy(a[k+1],temp);
+            }
+        }
+    }
+    for(int i=0;i<10;i++)
+    {
+        printf("%s",a[i]);
+    }
+}
+void lenPrint(char a[10][SIZE])
+{
+    char temp[SIZE];
+    for(int i=0;i<9;i++)
+    {
+        for(int k=0;k<9-i;k++)
+        {
+            if(strlen(a[k])>strlen(a[k+1]))
+            {
+                strcpy(temp,a[k]);
+                strcpy(a[k],a[k+1]);
+                strcpy(a[k+1],temp);
+            }
+        }
+    }
+    for(int i=0;i<10;i++)
+    {
+        printf("%s",a[i]);
+    }
+}
+void wordPrint(char a[10][SIZE])
+{
+    short len[10][1]={0};
+    for(int i=0;i<10;i++)
+    {
+        int k=0;
+        while(a[i][k]!=' '&&a[i][k]!='\n'&&a[i][k]!='\t')
+        {
+            k++;
+            len[i][0]++;
+        }
+    }
+    char temp[SIZE];
+    for(int i=0;i<9;i++)
+    {
+        for(int k=0;k<9-i;k++)
+        {
+            if(len[k][0]>len[k+1][0])
+            {
+                strcpy(temp,a[k]);
+                strcpy(a[k],a[k+1]);
+                strcpy(a[k+1],temp);
+            }
+        }
+    }
+    for(int i=0;i<10;i++)
+    {
+        printf("%s",a[i]);
+    }
+    
+}
+int main(void)
+{
+    char b='1';
+    char a[10][SIZE];
+    while(a!='q')
+    {
+        printf("enter 10 string");
+        tenString(a);
+        printf("1:printf by asc    2:printf by lenth\n");
+        printf("3:printf by wordlenth   q: quit\n");
+        scanf("%c",&b);
+        switch(b)
+        {
+            case '1':
+                ascPrint(b);
+                break;
+            case '2':
+                lenPrint(b);
+                break;
+            case '3':
+                wordPrint(b);
+                break;
+            case 'q':
+                break;
+        };
+    }
+    return 0;
+}
 ```
