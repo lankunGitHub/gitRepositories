@@ -183,5 +183,74 @@ ls --full-time .git/index
 (时间戳发生了变化！)
 ```
 我们可以发现.git/index记录了文件的时间戳，其实index中还记录了文件的长度等判断信息，当执行git status时，会先判断时间戳是否改变，若改变则说明文件可能发生改变，则进入文件进行进一步判断，若没改变，则将新的时间戳记录到index。这样通过时间戳，文件长度等进行判断比通过文本内容快很多，也是git高效的原因。
+.git/index实际上就是包含文件索引的目录树，记录了文件名和文件的状态信息，但没有储存文件内容，内容保存在.git/objects目录中，文件索引建立了文件和对象库中对象实体的关系
 ![Alt text](image.png)
+左侧1为工作区，右侧为版本库，版本库中的index即为暂存区，master即为master分支的目录树(对应的文件也应该保存在对象区)
+HEAD为指向master的“游标”
+<br>
+在执行git add命令时，暂存区的目录树会更新，同时工作区修改的内容被写入对象库中的一个新对象中，该对象的ID被记录到暂存区文件索引中
+当执行git commit命令时，暂存区的目录树会写到对象库中，master更新指向的目录树，最新指向的目录树就是暂存区的目录树
+当执行git reset HEAD命令时，暂存区的目录树被master分支的目录树替换，工作区不受影响。
+当执行git rm --cached <file>命令时，会直接从暂存区删除文件，工作区不做改变。(文件还保存在对象区，没有被删除，保证可以回溯版本)
+当执行git checkout .或git checkout --<file>命令时，会把暂存区的全部或指定文件替换工作区文件，这个操作会清除未添加到暂存区的改动
+当执行git checkout HEAD .或git checkout -- <file>会将master分支中的全部内容或指定文件替换暂存区和工作区，当然，暂存区和工作区的未提交改动会被清除
 
+### Git Diff魔法
+
+让我们来查看各个目录树
+为了让不同目录树差异明显，我们做些准备工作
+首先清除工作区并执行git checkout
+```
+$git clean -fd
+$git choekout .
+```
+然后添加内容
+```
+输入内容“3333”
+$mkdir -p a/b/c  //mkdir -p 参数允许你在创建目录时自动创建所需的父级目录，而不会因为缺少父级目录而报错。这样可以方便地创建多级目录结构。
+$touch Hello.txt
+输入内容4444
+$git add .
+输入内容5555
+$git status -s
+AM a/b/c/Hello.txt  //A：新增（Added）的文件，尚未添加到版本控制。
+M  welcome.txt
+```
+现在工作区，暂存区和master分支各不相同
+```
+$git ls-tree -l HEAD  //-l参数表示显示文件大小
+100644 blob 4f142ee300fd3f4fa2e89c76c76c0923d911f7ea      10    welcome.txt
+```
+    100644：这是文件的权限模式，以八进制表示。在这个例子中，100644 表示文件的权限为 -rw-r--r--，即文件所有者具有读写权限，其他用户只有读权限。
+
+    blob：这是 Git 中表示文件类型的标识符。在这个例子中，blob 表示这是一个普通的文件。//Git中的Blob对象是用于存储文件内容的数据类型，它代表Git仓库中的一个文件，并以二进制形式保存文件的内容。
+
+    4f142ee300fd3f4fa2e89c76c76c0923d911f7ea：这是文件的对象 ID，也称为 SHA-1 值或哈希值。每个文件在 Git 中都会被分配一个唯一的对象 ID，用于标识文件的内容。
+
+    10：这是文件的大小，以字节为单位。在这个例子中，文件的大小为 10 字节。
+
+    welcome.txt：这是文件的名称。在这个例子中，文件名为 welcome.txt。
+
+综上所述，该输出表示在当前提交（HEAD）下，存在一个名为 welcome.txt 的文件，其权限为 -rw-r--r--，大小为 10 字节，对象 ID 为 4f142ee300fd3f4fa2e89c76c76c0923d911f7ea。
+```
+$git ls-files -s  //暂存区的目录树
+100644 b0f6d94e939d2ec0db6e489aa9fc4854664ef923 0       a/b/c/Hello.txt
+100644 e0037f05868f8aec30670b1c09de3ba6f22a30ec 0       welcome.txt
+```
+注意，这里第三个字段是文件的编号
+如果想针对暂存区目录树使用git ls-tree,需要先将暂存区的目录树写入git对象库
+```
+$git write-tree
+d912fbae75abfbb1d6ae2ebc4b6c68e0096a5921
+$git ls-tree -l d912fbae
+040000 tree 228f94521aa9691cdfcec097986b535968d1f00b       -    a
+100644 blob e0037f05868f8aec30670b1c09de3ba6f22a30ec      15    welcome.txt
+```
+tree 是Git中的一种对象类型，用于表示目录或目录结构。它包含了目录中的子项信息，包括子目录和文件的权限、对象类型、对象 ID、大小和名称。通过 tree 对象，Git能够有效地组织和存储文件和目录的层次结构，并跟踪它们的变化。
+![Alt text](image-1.png)
+git diff  工作区和暂存区比较
+git diff --cached  暂存区和HEAD比较
+git diff HEAD  工作区和HEAD比较
+
+### 补充git commit -a
+对本地所有变更文件执行提交，包括本地修改和删除的文件，但不包括未被版本库跟踪文件，省去了git add,但尽量不要用
