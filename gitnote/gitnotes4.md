@@ -72,3 +72,36 @@ $tail -5 .git/logs/refs/heads/master
 aebd02e60903a4087a720193e9d376f247a4ab89 2f1d36f9b99a6ede0435a0f11698881f938b2ed0 lankunGitHub <> 1701527640 +0800      commit: Add new_commit.txt
 2f1d36f9b99a6ede0435a0f11698881f938b2ed0 aebd02e60903a4087a720193e9d376f247a4ab89 lankunGitHub <> 1701528484 +0800      reset: moving to HEAD^
 ```
+可以看到这个文件记载了master分支的变迁，，我们使用命令git reflog进行文件操作，使用show可以显示文件内容
+```
+$git reflog show master | head -5
+aebd02e master@{0}: reset: moving to HEAD^
+2f1d36f master@{1}: commit: Add new_commit.txt
+aebd02e master@{2}: commit: Add 2222
+09bfc1d master@{3}: commit (initial): Add welcome.txt
+```
+重置master
+```
+$git reset --hard master@{1}
+HEAD 现在位于 2f1d36f Add new_commit.txt
+$git log --oneline
+2f1d36f (HEAD -> master) Add new_commit.txt
+aebd02e Add 2222
+09bfc1d Add welcome.txt
+```
+new_commit.txt文件又回来了,日志也恢复了
+<br>
+
+### 深入了解git reset命令
+```
+用法一:git reset [-q] [<commit>] [--] <paths>
+用法二:git reset [--sort | --mixed | --hard | --merge | --keep] [-q] [<commit>]
+```
+第一种用法不会重置引用，不会更改工作区，而是提交指定状态(<commit>)下的文件(<path>)替换暂存区的文件，相当于取消之前add改变的暂存区
+![重置命令与版本库关系图](image-4.png)
+1.替换引用指向
+2.替换暂存区
+3.替换工作区
+使用--hard参数将执行1,2,3全部操作。
+使用--soft参数将执行1操作。
+使用--mixed或不使用参数将执行1,2操作
