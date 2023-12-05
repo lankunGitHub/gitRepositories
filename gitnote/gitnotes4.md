@@ -104,4 +104,12 @@ new_commit.txt文件又回来了,日志也恢复了
 3.替换工作区
 使用--hard参数将执行1,2,3全部操作。
 使用--soft参数将执行1操作。
-使用--mixed或不使用参数将执行1,2操作
+使用--mixed或不使用参数将执行1,2操作4
+```
+$git reset //仅将HEAD指向的目录树重置暂存区，工作区不影响
+$git reset HEAD  //同上
+$git reset -- filename  //仅将文件filename撤出暂存区
+$git reset HEAD filename  //同上
+$git reset --soft HEAD^  /工作区与暂存区不变，当提交回退一次
+```
+
