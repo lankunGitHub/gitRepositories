@@ -117,3 +117,39 @@ index 0000000..e69de29
 ```
 它还存在与对象库新、中，但因为它并没有被追踪，因此不能保证永久存在。在提交日志过期后，它随时就可以被删除
 ### 挽救分离指针
+使用git merge命令将先前丢失的提交合并到分支中
+```
+$git merge cc2e956
+```
+```
+$git cat-file -p HEAD
+tree e7ababe0c87443f8e868808154fde00e485fe40a
+parent 2f1d36f9b99a6ede0435a0f11698881f938b2ed0
+parent cc2e95649fcabded85ac3bf23e5a73a8aa5c9a53
+author lankunGitHub <lkLKlkLKlkLK09@outlook.com> 1702290869 +0800
+committer lankunGitHub <lkLKlkLKlkLK09@outlook.com> 1702290869 +0800
+
+Save HEAD
+```
+现在，该提交有两次父提交
+### gitcheckout的秘密
+```
+      git checkout [-q] [-f] [-m] [<branch>]
+      git checkout [-q] [-f] [-m] --detach [<branch>]
+      git checkout [-q] [-f] [-m] [--detach] <commit>
+      git checkout [-q] [-f] [-m] [[-b|-B|--orphan]<new-branch>] [<start-point>]
+      git checkout [-f] <tree-ish> [--] <pathspec>...
+      git checkout [-f] <tree-ish> --pathspec-from-file=<file> [--pathspec-file-nul]
+      git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [--] <pathspec>...
+      git checkout [-f|--ours|--theirs|-m|--conflict=<style>] --pathspec-from-file=<file> [--pathspec-file-nul]
+      git checkout (-p|--patch) [<tree-ish>] [--] [<pathspec>...]
+
+```
+![Alt text](image-5.png)
+```
+git checkout branch //检出分支
+git checkout(git checkout HEAD) //汇总暂存区，工作区和HEAD的差异
+git checkout --filename  //用暂存区的文件取代工作区的文件
+git checkout branch --filname //用分支的某文件替代工作区文件
+git checkout . //用暂存区的全部文件替代工作区(慎用)
+```

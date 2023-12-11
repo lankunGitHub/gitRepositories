@@ -202,7 +202,7 @@ HEAD为指向master的“游标”
 首先清除工作区并执行git checkout
 ```
 $git clean -fd
-$git choekout .
+$git checkout .
 ```
 然后添加内容
 ```
